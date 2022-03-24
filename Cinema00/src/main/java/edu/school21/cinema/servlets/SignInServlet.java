@@ -2,6 +2,8 @@ package edu.school21.cinema.servlets;
 
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -19,8 +21,7 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.warn("doGet - Started");
-        resp.getWriter().write("HELLLOOO SUKA");
+        LOGGER.warn("doGet signIn - Started");
 
         resp.setContentType("text/html");
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/html/signIn.html");
@@ -29,7 +30,11 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        resp.setContentType("text/html");
+        String phoneNum = req.getParameter("phoneNum");
+        String password = req.getParameter("pass");
+        LOGGER.debug("phoneNum = " + phoneNum + "\n" +
+        "pass = " + password);
     }
 
     @Override
