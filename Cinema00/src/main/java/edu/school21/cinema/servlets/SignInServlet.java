@@ -2,8 +2,9 @@ package edu.school21.cinema.servlets;
 
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import edu.school21.cinema.User.service.UserService;
+import edu.school21.cinema.config.Config;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -19,6 +20,15 @@ public class SignInServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SignInServlet.class);
 
+    private UserService userService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+        userService = context.getBean(UserService.class);
+        LOGGER.warn("init done");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.warn("doGet signIn - Started");
@@ -33,12 +43,11 @@ public class SignInServlet extends HttpServlet {
         resp.setContentType("text/html");
         String phoneNum = req.getParameter("phoneNum");
         String password = req.getParameter("pass");
+        userService.findUser(phoneNum);
         LOGGER.debug("phoneNum = " + phoneNum + "\n" +
         "pass = " + password);
-    }
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
+//        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/html/signIn.html");
+//        dispatcher.forward(req, resp);
     }
 }

@@ -1,12 +1,18 @@
-package edu.school21.cinema.User;
+package edu.school21.cinema.User.repository;
 
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
+import edu.school21.cinema.User.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
     JdbcTemplate jdbcTemplate;
 
     public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -20,5 +26,11 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getPass(),
                 user.getFirstName(),
                 user.getLastName());
+    }
+
+    @Override
+    public void findByNumber(String number) {
+        List<Map<String, Object>> list = jdbcTemplate.queryForList("SELECT * FROM users where phone_number = ?", number);
+        LOGGER.trace("name");
     }
 }

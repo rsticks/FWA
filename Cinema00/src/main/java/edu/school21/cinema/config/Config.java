@@ -1,8 +1,5 @@
 package edu.school21.cinema.config;
 
-import edu.school21.cinema.User.UserRepository;
-import edu.school21.cinema.User.UserRepositoryImpl;
-import edu.school21.cinema.User.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,13 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @PropertySource("../application.properties")
 public class Config {
 
-    @Value("${datasource.driver}")
+    @Value("${datasource_driver}")
     private String name;
-    @Value("${datasource.url}")
+    @Value("${datasource_url}")
     private String url;
-    @Value("${datasource.usrname}")
+    @Value("${datasource_username}")
     private String userName;
-    @Value("${datasoruce.password}")
+    @Value("${datasoruce_password}")
     private String password;
 
     @Bean
@@ -38,11 +35,5 @@ public class Config {
         dataSource.setPassword(password);
         return new JdbcTemplate(dataSource);
     }
-
-//    @Bean
-//    @Primary
-//    public UserServiceImpl getUserServiceImpl() {
-//        return new UserServiceImpl(new UserRepositoryImpl(getJdbcTemplate()), getBCryptPasswordEncoder());
-//    }
 
 }

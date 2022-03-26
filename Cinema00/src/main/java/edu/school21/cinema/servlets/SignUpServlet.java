@@ -2,15 +2,12 @@ package edu.school21.cinema.servlets;
 
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
-import edu.school21.cinema.User.UserService;
-import edu.school21.cinema.User.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
+import edu.school21.cinema.User.service.UserService;
+import edu.school21.cinema.config.Config;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,15 +19,13 @@ import java.io.IOException;
 @WebServlet(value = {"/signup"}, name = "SignUp", description = "Sing Up")
 public class SignUpServlet extends HttpServlet {
 
-    private ApplicationContext springContext;
-    private UserService userService;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SignUpServlet.class);
+    private UserService userService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        springContext = (ApplicationContext) config.getServletContext().getAttribute("springContext");
-        userService = springContext.getBean(UserService.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+        userService = context.getBean(UserService.class);
         LOGGER.warn("init done");
     }
 
@@ -54,5 +49,6 @@ public class SignUpServlet extends HttpServlet {
                 "pass = " + password);
 
         userService.saveUser(phoneNum, password, firstName, lastName);
+        resp.sendError(100);
     }
 }
