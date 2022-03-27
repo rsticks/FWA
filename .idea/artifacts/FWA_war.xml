@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="FWA:war">
+    <output-path>$PROJECT_DIR$/Cinema00/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>FWA</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="FWA-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="FWA:war exploded" />
+    </root>
+  </artifact>
+</component>

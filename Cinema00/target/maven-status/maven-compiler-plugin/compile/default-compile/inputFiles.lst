@@ -1,1 +1,11 @@
-C:\Users\alpah\OneDrive\Рабочий стол\FWA\demo\src\main\java\com\example\demo\HelloServlet.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/servlets/WelcomeServlet.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/servlets/SignInServlet.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/User/User.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/config/Config.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/User/UserMapper.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/servlets/ProfileServlet.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/servlets/SignUpServlet.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/User/service/UserServiceImpl.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/User/repository/UserRepositoryImpl.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/User/repository/UserRepository.java
+/Users/rsticks/IdeaProjects/FWA/Cinema00/src/main/java/edu/school21/cinema/User/service/UserService.java
