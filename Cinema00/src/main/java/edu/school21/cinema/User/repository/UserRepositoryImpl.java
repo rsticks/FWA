@@ -1,7 +1,5 @@
 package edu.school21.cinema.User.repository;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import edu.school21.cinema.User.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -12,7 +10,6 @@ import java.util.Map;
 @Component
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
     JdbcTemplate jdbcTemplate;
 
     public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -23,14 +20,22 @@ public class UserRepositoryImpl implements UserRepository {
     public void saveUser(User user) {
         jdbcTemplate.update("INSERT INTO users(phone_number, password, first_name, last_name) VALUES(?, ?, ?, ?)",
                 user.getPhoneNumber(),
-                user.getPass(),
+                user.getPassword(),
                 user.getFirstName(),
                 user.getLastName());
     }
 
     @Override
-    public void findByNumber(String number) {
+    public User findByNumber(String number) {
         List<Map<String, Object>> list = jdbcTemplate.queryForList("SELECT * FROM users where phone_number = ?", number);
-        LOGGER.trace("name");
+        User user = new User();
+        if (!list.isEmpty()) {
+            user.setID((Integer) list.get(0).get("id"));
+            user.setFirstName((String) list.get(0).get("first_name"));
+            user.setFirstName((String) list.get(0).get("last_name"));
+            user.setPhoneNumber((String) list.get(0).get("phone_number"));
+            user.setPassword((String) list.get(0).get("password"));
+        }
+        return user;
     }
 }

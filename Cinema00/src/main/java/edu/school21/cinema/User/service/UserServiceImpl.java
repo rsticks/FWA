@@ -5,6 +5,8 @@ import edu.school21.cinema.User.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -22,7 +24,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void findUser(String number) {
-        userRepository.findByNumber(number);
+    public User signInUser(String number, String password) throws AuthenticationException {
+        User user = userRepository.findByNumber(number);
+
+        if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
+            user.clearPassword();
+        } else {
+            throw new AuthenticationException("password or number incorrect!");
+        }
+        return user;
     }
 }

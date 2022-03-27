@@ -5,16 +5,20 @@ public class User {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String pass;
+    private String password;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String phoneNumber, String pass) {
+    public User(String firstName, String lastName, String phoneNumber, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.pass = pass;
+        this.password = password;
+    }
+
+    public void clearPassword() {
+        password = null;
     }
 
     public void setID(int ID) {
@@ -49,11 +53,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

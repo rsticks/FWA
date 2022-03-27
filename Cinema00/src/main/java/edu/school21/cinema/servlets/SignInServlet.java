@@ -1,11 +1,11 @@
 package edu.school21.cinema.servlets;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import edu.school21.cinema.User.User;
 import edu.school21.cinema.User.service.UserService;
 import edu.school21.cinema.config.Config;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,39 +15,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = {"/signin"}, name = "SignIn", description = "Sing In")
+@WebServlet(value = "/signin", name = "SignIn", description = "Sing In")
 public class SignInServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SignInServlet.class);
-
     private UserService userService;
+    private static final String SIGNIN_URL = "/WEB-INF/html/signIn.html";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         userService = context.getBean(UserService.class);
-        LOGGER.warn("init done");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.warn("doGet signIn - Started");
-
         resp.setContentType("text/html");
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/html/signIn.html");
-        dispatcher.forward(req, resp);
+        req.getRequestDispatcher(SIGNIN_URL).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         String phoneNum = req.getParameter("phoneNum");
-        String password = req.getParameter("pass");
-        userService.findUser(phoneNum);
-        LOGGER.debug("phoneNum = " + phoneNum + "\n" +
-        "pass = " + password);
-
-//        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/html/signIn.html");
-//        dispatcher.forward(req, resp);
+        String password = req.getParameter("password");
+        try {
+            User user = userService.signInUser(phoneNum, password);
+            req.getSession().setAttribute("user", user);
+            resp.sendRedirect("/profile");
+        } catch (AuthenticationException e) {
+            RequestDispatcher dispatcher = req.getRequestDispatcher(SIGNIN_URL);
+            dispatcher.forward(req, resp);
+        }
     }
 }
