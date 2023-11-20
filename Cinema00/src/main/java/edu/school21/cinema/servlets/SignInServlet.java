@@ -31,6 +31,9 @@ public class SignInServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         req.getRequestDispatcher(SIGNIN_URL).forward(req, resp);
+
+//        User user = (User)req.getAttribute("user");
+
     }
 
     @Override
